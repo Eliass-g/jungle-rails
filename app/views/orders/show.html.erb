@@ -4,6 +4,25 @@
     <h1>Order #<%= @order.id %></h1>
   </header>
 
+ 
+ <% @line_items.each do |item| %>
+  <div>
+  <% product = Product.find_by(id: item.product_id) %>
+  <%= image_tag product.image.tiny.url %>
+  Name: <%= product.name %> 
+  Description: <%= product.description %>
+  Quantity: <%= item.quantity %>
+  Total: <%= humanized_money_with_symbol item.total_price_cents / 100.00 %>
+  </div>
+  <% end %>
+
+  <div>
+  Final Amount: <%= humanized_money_with_symbol @order.total_cents / 100 %>
+  Email: <%= @order.email %>
+  </div>
+ 
+
+
   <div class="order-summary jumbotron">
     <h4>Thank you for your order!</h4>
   </div>
